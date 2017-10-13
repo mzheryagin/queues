@@ -3,7 +3,7 @@
  * uniformly at random from items in the data structure.
  * @param <Item>
  */
-public class RandomizedQueue<Item> implements Iterable<Item>
+/*public class RandomizedQueue<Item> implements Iterable<Item>
 {
     public RandomizedQueue()                 // construct an empty randomized queue
     {
@@ -44,4 +44,4 @@ public class RandomizedQueue<Item> implements Iterable<Item>
     {
 
     }
-}
+}*/
