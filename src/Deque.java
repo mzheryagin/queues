@@ -6,12 +6,12 @@ import java.util.NoSuchElementException;
 /**
  * A double-ended queue or deque (pronounced “deck”) is a generalization of a stack and a queue that
  * supports adding and removing items from either the front or the back of the data structure.
- * @param <T> some type
+ * @param <Item> some type
  */
-public class Deque<T> implements Iterable<T> {
+public class Deque<Item> implements Iterable<Item> {
   private int dequeSize;
-  private Item<T> firstItem;
-  private Item<T> lastItem;
+  private Node<Item> firstItem;
+  private Node<Item> lastItem;
 
 
   public Deque() {                         // construct an empty deque
@@ -28,11 +28,11 @@ public class Deque<T> implements Iterable<T> {
     return dequeSize;
   }
 
-  public void addFirst(T item) {           // add the item to the front
+  public void addFirst(Item item) {           // add the item to the front
     if (item == null) {
       throw new java.lang.IllegalArgumentException();
     }
-    Item<T> currentItem = new Item<>(item);
+    Node<Item> currentItem = new Node<>(item);
     if (firstItem != null) {
       firstItem.previousItem = currentItem;
       currentItem.nextItem = firstItem;
@@ -44,11 +44,11 @@ public class Deque<T> implements Iterable<T> {
     dequeSize++;
   }
 
-  public void addLast(T item) {           // add the item to the end
+  public void addLast(Item item) {           // add the item to the end
     if (item == null) {
       throw new java.lang.IllegalArgumentException();
     }
-    Item<T> currentItem = new Item<>(item);
+    Node<Item> currentItem = new Node<>(item);
     if (lastItem != null) {
       lastItem.nextItem = currentItem;
       currentItem.previousItem = lastItem;
@@ -61,11 +61,11 @@ public class Deque<T> implements Iterable<T> {
   }
 
 
-  public T removeFirst() {               // remove and return the item from the front
+  public Item removeFirst() {               // remove and return the item from the front
     if (isEmpty()) {
       throw new java.util.NoSuchElementException();
     }
-    Item<T> oldFirstItem = firstItem;
+    Node<Item> oldFirstItem = firstItem;
     if (size() == 1) {
       firstItem = null;
       lastItem = null;
@@ -78,11 +78,11 @@ public class Deque<T> implements Iterable<T> {
     return oldFirstItem.data;
   }
 
-  public T removeLast() {                // remove and return the item from the end
+  public Item removeLast() {                // remove and return the item from the end
     if (isEmpty()) {
       throw new java.util.NoSuchElementException();
     }
-    Item<T> oldLastItem = lastItem;
+    Node<Item> oldLastItem = lastItem;
     if (size() == 1) {
       firstItem = null;
       lastItem = null;
@@ -95,18 +95,18 @@ public class Deque<T> implements Iterable<T> {
     return oldLastItem.data;
   }
 
-  private class DequeIterator implements Iterator<T> {
-    private Item<T> currentIterItem = firstItem;
+  private class DequeIterator implements Iterator<Item> {
+    private Node<Item> currentIterItem = firstItem;
 
     public boolean hasNext() {
       return currentIterItem != lastItem;
     }
 
-    public T next() {
+    public Item next() {
       if (!hasNext()) {
         throw new NoSuchElementException();
       }
-      Item<T> oldCurrentItem = currentIterItem;
+      Node<Item> oldCurrentItem = currentIterItem;
       currentIterItem = currentIterItem.nextItem;
       return oldCurrentItem.data;
     }
@@ -116,22 +116,22 @@ public class Deque<T> implements Iterable<T> {
     }
   }
 
-  public Iterator<T> iterator() {        // return an iterator over items in order from front to end
+  public Iterator<Item> iterator() {        // return an iterator over items in order from front to end
     return new DequeIterator();
   }
 
-  private static class Item<U> {
-    private Item<U> nextItem = null;
-    private Item<U> previousItem = null;
+  private static class Node<U> {
+    private Node<U> nextItem = null;
+    private Node<U> previousItem = null;
     private U data;
 
-    private Item(U data) {
+    private Node(U data) {
       this.data = data;
     }
   }
 
   public static void main(String[] args) {   // unit testing (optional)
-    Deque<Integer> intDeq = new Deque<>();
+    /*Deque<Integer> intDeq = new Deque<>();
     for (int i = 1; i <= 10 ; i++) {
       if (i % 2 == 0) {
         intDeq.addFirst(i);
@@ -158,6 +158,6 @@ public class Deque<T> implements Iterable<T> {
     for (int i = 0; i < 5; i++) {
       System.out.println("Element " + intDeq.removeLast() + " was removed");
     }
-    System.out.printf("count = " + intDeq.size());
+    System.out.printf("count = " + intDeq.size());*/
   }
 }

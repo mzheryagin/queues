@@ -4,12 +4,12 @@ import java.util.Iterator;
 /**
  * A randomized queue is similar to a stack or queue, except that the item removed is chosen
  * uniformly at random from items in the data structure.
- * @param <T>
+ * @param <Item>
  */
-public class RandomizedQueue<T> implements Iterable<T> {
+public class RandomizedQueue<Item> implements Iterable<Item> {
   private int capacity;
   private int itemsCount;
-  T[] queue;
+  private Item[] queue;
 
   /**
    * Construct an empty randomized queue
@@ -17,12 +17,12 @@ public class RandomizedQueue<T> implements Iterable<T> {
   public RandomizedQueue() {
     capacity = 1;
     itemsCount = 0;
-    queue = (T[]) new Object[capacity];
+    queue = (Item[]) new Object[capacity];
   }
 
   private void increaseQueueSize() {
     capacity *= 2;
-    T[] newQueue = (T[]) new Object[capacity];
+    Item[] newQueue = (Item[]) new Object[capacity];
     for (int i = 0; i < itemsCount; i++) {
       newQueue[i] = queue[i];
     }
@@ -31,7 +31,7 @@ public class RandomizedQueue<T> implements Iterable<T> {
 
   private void decreaseQueueSize() {
     capacity /= 2;
-    T[] newQueue = (T[]) new Object[capacity];
+    Item[] newQueue = (Item[]) new Object[capacity];
     for (int i = 0; i < itemsCount; i++) {
       newQueue[i] = queue[i];
     }
@@ -55,7 +55,7 @@ public class RandomizedQueue<T> implements Iterable<T> {
   /**
    * Add the item
    */
-  public void enqueue(T item) {
+  public void enqueue(Item item) {
     if (item == null) {
       throw new java.lang.IllegalArgumentException();
     }
@@ -69,7 +69,7 @@ public class RandomizedQueue<T> implements Iterable<T> {
   /**
    * remove and return a random item
    */
-  public T dequeue() {
+  public Item dequeue() {
     if (isEmpty()) {
       throw new java.util.NoSuchElementException();
     }
@@ -77,7 +77,7 @@ public class RandomizedQueue<T> implements Iterable<T> {
       decreaseQueueSize();
     }
     int returnItemIndex = StdRandom.uniform(itemsCount);
-    T returnItem = queue[returnItemIndex];
+    Item returnItem = queue[returnItemIndex];
 
     //replace deleted item with the last one and make it null
     queue[returnItemIndex] = queue[--itemsCount];
@@ -88,14 +88,14 @@ public class RandomizedQueue<T> implements Iterable<T> {
   /**
    * return a random item (but do not remove it)
    */
-  public T sample() {
+  public Item sample() {
     if (itemsCount == 0) {
       throw new java.util.NoSuchElementException();
     }
     return queue[StdRandom.uniform(itemsCount)];
   }
 
-  private class QueueIterator implements Iterator<T> {
+  private class QueueIterator implements Iterator<Item> {
     private int currentIndex = 0;
     private int[] shuffledIndexes = new int[itemsCount];
 
@@ -110,7 +110,7 @@ public class RandomizedQueue<T> implements Iterable<T> {
       return currentIndex < itemsCount;
     }
 
-    public T next() {
+    public Item next() {
       if (!hasNext()) {
         throw new java.util.NoSuchElementException();
       }
@@ -125,7 +125,7 @@ public class RandomizedQueue<T> implements Iterable<T> {
   /**
    * return an independent iterator over items in random order
    */
-  public Iterator<T> iterator() {
+  public Iterator<Item> iterator() {
     return new QueueIterator();
   }
 
@@ -133,8 +133,8 @@ public class RandomizedQueue<T> implements Iterable<T> {
    * unit testing (optional)
    */
   public static void main(String[] args) {
-    int N = 10;
-    RandomizedQueue<Integer> testQueue = new RandomizedQueue();
+    /*int N = 10;
+    RandomizedQueue<Integer> testQueue = new RandomizedQueue<>();
     for (int i = 0; i < N; i++) {
       testQueue.enqueue(StdRandom.uniform(1000));
     }
@@ -145,7 +145,7 @@ public class RandomizedQueue<T> implements Iterable<T> {
     for (Integer i : testQueue) {
       System.out.println(i);
     }
-    System.out.println();
+    System.out.println();*/
 
   }
 }
